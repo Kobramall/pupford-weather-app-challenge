@@ -1,23 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import SearchPage from './componets/searchPage';
+import WeatherByZip from './componets/weatherByZip';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 
 function App() {
+  
+  const [ zipCode, setZipCode ] = useState('')
+  const [ locationList, setLocationList] = useState([{id: 0, weather: 83},{id: 1, weather: 32}])
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+       <Router>
+          <Routes>
+             <Route path="/"element={<SearchPage locationList={locationList} />}/>
+             <Route path='/zip' element={<WeatherByZip />}/>
+          </Routes>
+       </Router>
     </div>
   );
 }
