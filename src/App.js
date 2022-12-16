@@ -9,13 +9,15 @@ function App() {
   
   const [ zipCode, setZipCode ] = useState('')
   const [ locationList, setLocationList] = useState([])
-  const [ coordinate, setCoordinate] = useState({})
+  const [weatherData, setWeatherData] = useState({name:'', weather: []})
   
   useEffect(() => {
    axios.get('http://localhost:8000/locations')
    .then(res => setLocationList(res.data))
    .catch(err => console.error(err))
  });
+
+
 
  const handleChange = (evt) =>{
  
@@ -26,8 +28,8 @@ function App() {
     <div className="App">
        <Router>
           <Routes>
-             <Route path="/"element={<SearchPage locationList={locationList} setLocationList={setLocationList} zipCode={zipCode} handleChange={handleChange}/>}/>
-             <Route path='/zip' element={<WeatherByZip zipCode={zipCode} coordinate={coordinate} setCoordinate={setCoordinate}/>}/>
+             <Route path="/"element={<SearchPage locationList={locationList} setLocationList={setLocationList} zipCode={zipCode} handleChange={handleChange} setWeatherData={setWeatherData}/>}/>
+             <Route path='/zip' element={<WeatherByZip zipCode={zipCode} weatherData={weatherData}/>}/>
           </Routes>
        </Router>
     </div>

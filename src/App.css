@@ -36,3 +36,37 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+h3{
+  font-size: 500%;
+}
+
+
+input{
+  width: 30%;
+  padding: 3px;
+}
+
+p{
+  margin-bottom: 3%;
+}
+
+.locationList{
+   border-color: black;
+   border-width: 10px;
+}
+
+.cityName{
+  font-size: 500%;
+  margin-top: 1%;
+}
+
+.currentWeather{
+   font-size:150%;
+   margin-top: 2%;
+   margin-bottom: 2%;
+}
+
+
