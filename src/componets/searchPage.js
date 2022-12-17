@@ -5,9 +5,15 @@ import axios from 'axios'
 
 const SearchPage = (props) => {
     
-   const { locationList, zipCode, handleChange, setWeatherData } = props
+   const { locationList, setLocationList, setZipCode, zipCode, handleChange, setWeatherData } = props
     const navigate = useNavigate(); 
 
+    useEffect(() => {
+      axios.get('http://localhost:8000/locations')
+      .then(res => setLocationList(res.data))
+      .catch(err => console.error(err))
+    });
+    
     const searchZipCode = () =>{
       axios.get(`http://api.openweathermap.org/geo/1.0/zip?zip=${zipCode},US&appid=54e0b872a6ec4d0857cd588cae22095a`)
   .then(res => axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${res.data.lat}&lon=${res.data.lon}&appid=54e0b872a6ec4d0857cd588cae22095a`)
@@ -16,7 +22,7 @@ const SearchPage = (props) => {
       )
   .catch(err => console.log(err))
     
-     navigate('/zip')
+     navigate(zipCode)
 }
     
     
@@ -32,13 +38,13 @@ const SearchPage = (props) => {
         <main>
           <h3>Welcome</h3>
           <div className="searchBar">
-             <input type="text" value={zipCode} onChange={handleChange}></input><span><button onClick={()=> searchZipCode()}>?</button></span>
-             <p>Enter a Zip code to Search for Weather</p>
+             <input type="text" value={zipCode} onChange={handleChange}></input><span><button onClick={()=> searchZipCode()}>search</button></span>
+             <p>Enter a zip code to zearch for weather</p>
           </div>
-          <h2>List of saved Locations</h2>
+          <h2>List of saved locations</h2>
           <div className="locationList">
-              {locationList.map((item)=>{
-                return <div key={item.id}>{item.name}<span> {item.zipCode}</span><button value={item.id} onClick={()=> deleteLocation(item.id)}>X</button></div>
+              { locationList.map((item)=>{
+                return <div onClick={()=> setZipCode(item.zipCode)} key={item.id}>{item.name}<span> {item.zipCode} </span><button value={item.id} onClick={()=> deleteLocation(item.id)}>X</button></div>
               })}
           </div>
         </main>
